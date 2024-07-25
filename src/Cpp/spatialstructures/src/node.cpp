@@ -16,7 +16,7 @@ namespace HF {
 			x = NAN;
 			y = NAN;
 			z = NAN;
-			id = NAN;
+			// id = NAN;
 		}
 
 		Node::Node(float x, float y, float z, int id) : x(x), y(y), z(z), id(id) {};
