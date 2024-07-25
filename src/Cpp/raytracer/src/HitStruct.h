@@ -15,7 +15,7 @@ namespace HF::RayTracer {
 		/// <summary> Determine whether or not this hitstruct contains a hit. </summary>
 		/// <returns> True if the point hit, false if it did not </returns>
 		inline bool DidHit() const {
-			return DidIntersect(this->meshid);
+			return this->DidIntersect(this->meshid);
 		}
 	};
 
