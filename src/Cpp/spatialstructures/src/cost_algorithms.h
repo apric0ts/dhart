@@ -14,6 +14,10 @@
 
 #include "Constants.h"
 
+#include "graph.h"
+#include "node.h"
+#include "Edge.h"
+
 namespace HF::SpatialStructures {
 	struct Node;
 	struct Edge;
