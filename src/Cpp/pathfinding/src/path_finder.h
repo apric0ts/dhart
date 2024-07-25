@@ -12,6 +12,9 @@
 #include <cassert>
 #include <iostream>
 
+// Linux
+#include <cmath>
+
 namespace HF {
 	// Forward declares so we don't need to include these in the header.
 	namespace SpatialStructures {
