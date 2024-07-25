@@ -19,6 +19,8 @@
 #include <json.hpp>
 #include <fstream>
 #include <ostream>
+#include <stdexcept>
+#include <cmath>
 
 using namespace Eigen;
 using std::vector;
@@ -26,6 +28,8 @@ using std::string;
 using namespace HF::Exceptions;
 
 namespace HF::SpatialStructures {
+
+	int IMPL_ValueArrayIndex(int parent, int child, const int* outer_index_ptr, const int* inner_index_ptr); // forward declaration
 
 	inline bool IsInRange(int nnz, int num_rows, int parent) {
 		bool out_of_range = (nnz <= 0 || num_rows <= parent);
@@ -952,7 +956,7 @@ namespace HF::SpatialStructures {
 			// with undirected set to false.
 			bool check_undirected = undirected ? HasEdge(child, parent, false, cost_type) : false;
 
-			return (!isnan(cost) || check_undirected);
+			return (!std::isnan(cost) || check_undirected);
 		}
 	}
 
