@@ -9,7 +9,7 @@
 #include <Geometry>
 #include <HFExceptions.h>
 #include <math.h>
-#include <corecrt_math_defines.h>
+// #include <corecrt_math_defines.h>
 #include <iostream>
 #include <robin_hood.h>
 

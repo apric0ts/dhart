@@ -6,7 +6,7 @@
 ///	\date		26 Jun 2020
 
 #include <embree_raytracer.h>
-#include <corecrt_math_defines.h>
+// #include <corecrt_math_defines.h>
 #include <functional>
 #include <iostream>
 #include <thread>

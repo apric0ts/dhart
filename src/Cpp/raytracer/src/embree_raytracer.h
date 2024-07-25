@@ -9,10 +9,10 @@
 #ifndef EMBREE_RAY_TRACER
 #define EMBREE_RAY_TRACER
 
-#include <rpc.h>
+// #include <rpc.h>
 #include <rtcore.h>
 
-#include <corecrt_math_defines.h>
+// #include <corecrt_math_defines.h>
 #include <vector>
 #include <array>
 #include <HitStruct.h>
@@ -1315,7 +1315,7 @@ namespace HF::RayTracer {
 
 
 	\remarks
-	This algorithm is based on an implementation of the Möller–Trumbore intersection algorithm written
+	This algorithm is based on an implementation of the Mï¿½llerï¿½Trumbore intersection algorithm written
 	on the wikipedia page https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm.
 
 */
