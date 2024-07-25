@@ -560,66 +560,66 @@ namespace HF::RayTracer {
 		return Occluded_IMPL(origin[0], origin[1], origin[2], direction[0], direction[1], direction[2]);
 	}
 
-	std::vector<char> EmbreeRayTracer::Occlusions(
-		const std::vector<std::array<float, 3>>& origins,
-		const std::vector<std::array<float, 3>>& directions,
-		float max_distance, bool use_parallel)
-	{
-		std::vector<char> out_array;
-		int cores = static_cast<int> (std::thread::hardware_concurrency());
-		if (origins.size() < cores || directions.size() < cores)
-			// Don't use more cores than there are rays. This caused a hard to find bug earlier.
-			// Doesn't seem to happen with the other ray types. (race condition?)
-			omp_set_num_threads(min(max(origins.size(), directions.size()), cores));
+// 	std::vector<char> EmbreeRayTracer::Occlusions(
+// 		const std::vector<std::array<float, 3>>& origins,
+// 		const std::vector<std::array<float, 3>>& directions,
+// 		float max_distance, bool use_parallel)
+// 	{
+// 		std::vector<char> out_array;
+// 		int cores = static_cast<int> (std::thread::hardware_concurrency());
+// 		if (origins.size() < cores || directions.size() < cores)
+// 			// Don't use more cores than there are rays. This caused a hard to find bug earlier.
+// 			// Doesn't seem to happen with the other ray types. (race condition?)
+// 			omp_set_num_threads(min(max(origins.size(), directions.size()), cores));
 
-		if (directions.size() > 1 && origins.size() > 1) {
-			out_array.resize(origins.size());
-#pragma omp parallel for if(use_parallel) schedule(dynamic, 128)
-			for (int i = 0; i < origins.size(); i++) {
-				out_array[i] = Occluded_IMPL(
-					origins[i][0], origins[i][1], origins[i][2],
-					directions[i][0], directions[i][1], directions[i][2],
-					max_distance, -1
-				);
-			}
-		}
-		else if (directions.size() > 1 && origins.size() == 1) {
-			out_array.resize(directions.size());
-			const auto& origin = origins[0];
-			printf("Using multidirection, single origin\n");
-#pragma omp parallel for if(use_parallel) schedule(dynamic, 128)
-			for (int i = 0; i < directions.size(); i++) {
-				const auto& direction = directions[i];
-				out_array[i] = Occluded_IMPL(
-					origin[0], origin[1], origin[2],
-					direction[0], direction[1], direction[2],
-					max_distance, -1
-				);
-			}
-		}
+// 		if (directions.size() > 1 && origins.size() > 1) {
+// 			out_array.resize(origins.size());
+// #pragma omp parallel for if(use_parallel) schedule(dynamic, 128)
+// 			for (int i = 0; i < origins.size(); i++) {
+// 				out_array[i] = Occluded_IMPL(
+// 					origins[i][0], origins[i][1], origins[i][2],
+// 					directions[i][0], directions[i][1], directions[i][2],
+// 					max_distance, -1
+// 				);
+// 			}
+// 		}
+// 		else if (directions.size() > 1 && origins.size() == 1) {
+// 			out_array.resize(directions.size());
+// 			const auto& origin = origins[0];
+// 			printf("Using multidirection, single origin\n");
+// #pragma omp parallel for if(use_parallel) schedule(dynamic, 128)
+// 			for (int i = 0; i < directions.size(); i++) {
+// 				const auto& direction = directions[i];
+// 				out_array[i] = Occluded_IMPL(
+// 					origin[0], origin[1], origin[2],
+// 					direction[0], direction[1], direction[2],
+// 					max_distance, -1
+// 				);
+// 			}
+// 		}
 
-		// This is might seem to be an application of coherent rays with streaming, 
-		// but coherent rays also require the origins to be very similar, so it doesn't help
-		else if (directions.size() == 1 && origins.size() > 1)
-		{
-			out_array.resize(origins.size());
-			const auto& direction = directions[0];
+// 		// This is might seem to be an application of coherent rays with streaming, 
+// 		// but coherent rays also require the origins to be very similar, so it doesn't help
+// 		else if (directions.size() == 1 && origins.size() > 1)
+// 		{
+// 			out_array.resize(origins.size());
+// 			const auto& direction = directions[0];
 
-			// Use chunk size of 256 for reducing parallel overhead
-		#pragma omp parallel for if(use_parallel) schedule(dynamic, 256)
-			for (int i = 0; i < origins.size(); i++) {
-				const auto& origin = origins[i];
-				out_array[i] = Occluded_IMPL(origin[0], origin[1], origin[2], 
-											direction[0], direction[1], direction[2], 
-											max_distance, -1);
-			}
-		}
+// 			// Use chunk size of 256 for reducing parallel overhead
+// 		#pragma omp parallel for if(use_parallel) schedule(dynamic, 256)
+// 			for (int i = 0; i < origins.size(); i++) {
+// 				const auto& origin = origins[i];
+// 				out_array[i] = Occluded_IMPL(origin[0], origin[1], origin[2], 
+// 											direction[0], direction[1], direction[2], 
+// 											max_distance, -1);
+// 			}
+// 		}
 
-		else if (directions.size() == 1 && origins.size() == 1) {
-			out_array = { Occluded_IMPL(origins[0], directions[0], max_distance) };
-		}
-		return out_array;
-	}
+// 		else if (directions.size() == 1 && origins.size() == 1) {
+// 			out_array = { Occluded_IMPL(origins[0], directions[0], max_distance) };
+// 		}
+// 		return out_array;
+// 	}
 
 	bool EmbreeRayTracer::Occluded_IMPL(float x, float y, float z, float dx, float dy, float dz, float distance, int mesh_id)
 	{
