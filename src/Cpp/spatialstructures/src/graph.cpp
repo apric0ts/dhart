@@ -508,7 +508,7 @@ namespace HF::SpatialStructures {
 		// Throw if we're not compressed since this is a const function and compressing the graph
 		// will make it non-const
 		if (this->needs_compression)
-			throw std::exception("The graph must be compressed!");
+			throw std::runtime_error("The graph must be compressed!");
 
 		// Preallocate an array of edge sets
 		vector<EdgeSet> out_edges(this->size());
