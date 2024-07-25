@@ -2,6 +2,11 @@
 
 
 namespace HF::RayTracer {
+
+	const int FAIL_ID = ((unsigned int)-1);
+	inline bool DidIntersect(int mesh_id) {
+		return mesh_id != FAIL_ID;
+	}
 	/// <summary> A simple hit struct to carry all relevant information about hits. </summary>
 	template <typename numeric_type = double>
 	struct HitStruct {
@@ -15,12 +20,9 @@ namespace HF::RayTracer {
 		/// <summary> Determine whether or not this hitstruct contains a hit. </summary>
 		/// <returns> True if the point hit, false if it did not </returns>
 		inline bool DidHit() const {
-			return this->DidIntersect(this->meshid);
+			return HF::RayTracer::DidIntersect(this->meshid);
 		}
 	};
 
-	const int FAIL_ID = ((unsigned int)-1);
-	inline bool DidIntersect(int mesh_id) {
-		return mesh_id != FAIL_ID;
-	}
+
 }
