@@ -357,7 +357,7 @@ namespace HF::Geometry {
 		// Throw because we were given an invalid group mode.
 		default:
 			std::cerr << "Mesh group mode" << gm << " doesn't exist!" << std::endl;
-			throw std::exception();
+			throw std::runtime_error();
 			break;
 		}
 

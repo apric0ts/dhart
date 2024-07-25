@@ -60,7 +60,7 @@ namespace HF {
 				return z;
 				break;
 			default:
-				throw std::exception(); //TODO: Make this a custom human factors exception
+				throw std::runtime_error(); //TODO: Make this a custom human factors exception
 			}
 		}
 
@@ -76,7 +76,7 @@ namespace HF {
 				return z;
 				break;
 			default:
-				throw std::exception(); // TODO: Make this a custom human factors exception
+				throw std::runtime_error(); // TODO: Make this a custom human factors exception
 			}
 		}
 

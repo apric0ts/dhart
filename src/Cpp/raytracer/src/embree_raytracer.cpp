@@ -534,7 +534,7 @@ namespace HF::RayTracer {
 			}
 		}
 		else {
-			throw std::exception("Incorrect usage of castrays");
+			throw std::runtime_error("Incorrect usage of castrays");
 		}
 
 		return out_results;
