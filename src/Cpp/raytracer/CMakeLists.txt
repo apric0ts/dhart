@@ -26,6 +26,11 @@ if(WIN32)
 	message([STATUS] "Setting embree dir to " ${Embree_DIR})
 endif()
 
+if(UNIX)
+	set(Embree_DIR ${PROJECT_SOURCE_DIR}/external/Embree)
+	message([STATUS] "Setting embree dir to " ${Embree_DIR})
+endif()
+
 find_package(Embree 3.0 REQUIRED)
 #message([STATUS] ${ROBIN_HOOD_DIR})
 # Look for robin_hood code 
