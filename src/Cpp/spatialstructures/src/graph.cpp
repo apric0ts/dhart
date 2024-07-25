@@ -597,7 +597,7 @@ namespace HF::SpatialStructures {
 			throw std::out_of_range("Unimplemented aggregation type");
 			break;
 		}
-		assert((out_total == 0 || isnormal(out_total)));
+		assert((out_total == 0 || std::acos(out_total)));
 		return;
 	}
 
@@ -656,7 +656,7 @@ namespace HF::SpatialStructures {
 			for (int k = 0; k < num_nodes; ++k) {
 
 				// Iterate through every edge for the node at column k
-				for (csr::InnerIterator it(edge_matrix, k); it; ++it)
+				for (typename csr::InnerIterator it(edge_matrix, k); it; ++it)
 				{
 					// Get values from the iterator for this row/col.
 					float cost = it.value();
@@ -675,7 +675,7 @@ namespace HF::SpatialStructures {
 	std::vector<float> Graph::AggregateGraph(COST_AGGREGATE agg_type, bool directed, const string& cost_type) const
 	{
 		// This won't work if the graph isn't compressed.
-		if (this->needs_compression) throw std::exception("The graph must be compressed!");
+		if (this->needs_compression) throw std::runtime_error("The graph must be compressed!");
 	
 		// Determine if this is the default cost. 
 		const bool default_cost = this->IsDefaultName(cost_type);
@@ -960,7 +960,7 @@ namespace HF::SpatialStructures {
 
 		// Throw if the graph isn't compresesed.
 		if (!edge_matrix.isCompressed())
-			throw std::exception("Can't get this for uncompressed matrix!");
+			throw std::runtime_error("Can't get this for uncompressed matrix!");
 
 		// Return early if parent or child don't exist in the graph
 		if (!hasKey(parent) || !hasKey(child)) return false;
