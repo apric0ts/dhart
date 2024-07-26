@@ -25,7 +25,13 @@ namespace HF::RayTracer {
 namespace HF::SpatialStructures {
 	class Graph;
 	struct Edge;
-	enum STEP;
+	enum STEP {
+			NOT_CONNECTED = 0, ///< No connection between parent and child.
+			NONE = 1,		 ///< Parent and child are on the same plane and no step is required.
+			UP = 2,			///< A step up is required to get from parent to child.
+			DOWN = 3,		///< A step down is required to get from parent to child.
+			OVER = 4		///< A step over something is required to get from parent to child.
+		};
 }
 
 /*! \brief Generate a graph of accessible space from a given start point. 
