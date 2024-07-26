@@ -10,8 +10,11 @@
 #define PATHFINDER_C_H
 
 #include <cinterface_utils.h>
-#define C_INTERFACE extern "C" __declspec(dllexport) int
-
+#ifdef _WIN32
+	#define C_INTERFACE extern "C" __declspec(dllexport) int
+#else
+    #define C_INTERFACE extern "C" int
+#endif
 namespace HF {
 	namespace SpatialStructures { class Graph; class Path; class PathMember; }
 	namespace Pathfinding { class BoostGraph; }
