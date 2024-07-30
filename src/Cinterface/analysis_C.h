@@ -16,7 +16,7 @@
 #ifdef _WIN32
 	#define C_INTERFACE extern "C" __declspec(dllexport) int
 #else
-    #define C_INTERFACE extern "C" int
+    #define C_INTERFACE extern "C" __attribute__((visibility("default"))) int
 #endif
 
 namespace HF {
